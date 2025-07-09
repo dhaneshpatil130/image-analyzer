@@ -1,0 +1,134 @@
+# Project Report: MERN Application for Image Analysis Using Google Gemini API
+
+## 1. Introduction
+This project involves the development of a MERN (MongoDB, Express.js, React, Node.js) stack application that analyzes images using the Google Gemini API and extracts text from them. The application includes user authentication functionality with login and signup capabilities to ensure secure access.
+
+## 2. Objectives
+- To build an efficient and user-friendly image analysis application using Google Gemini API.
+- To implement secure user authentication (login and signup).
+- To provide users with a dashboard for managing their uploaded images and extracted text results.
+
+---
+
+## 3. Features
+1. **User Authentication:**
+   - Signup with email and password.
+   - Login with email and password.
+   - Secure password hashing using bcrypt.
+
+2. **Image Analysis:**
+   - Upload images in supported formats (e.g., JPG, PNG).
+   - Analyze images using the Google Gemini API for text extraction.
+   - Display extracted text results to users.
+
+3. **Dashboard:**
+   - Manage uploaded images.
+   - View extracted text and download it as a file.
+   - Delete unwanted images or results.
+
+---
+
+## 4. Technologies Used
+- **Frontend:** React.js with TailwindCSS for responsive UI.
+- **Backend:** Node.js and Express.js.
+- **Database:** MongoDB for storing user data, images, and results.
+- **Image Analysis API:** Google Gemini API for advanced text extraction and image analysis.
+- **Authentication:** JSON Web Tokens (JWT) for secure sessions and bcrypt for password hashing.
+
+---
+
+## 5. Data Flow Diagram (DFD)
+### Level 0 DFD:
+- High-level overview showing user interaction with the system for image upload, analysis, and result retrieval.
+
+```
++---------+       +-----------------+       +---------------+
+|  User   | ----> | Image Analysis  | ----> |  Text Results |
++---------+       +-----------------+       +---------------+
+```
+
+### Level 1 DFD:
+#### Processes:
+1. **User Authentication:**
+   - Input: User credentials.
+   - Output: Authentication token.
+2. **Image Upload and Analysis:**
+   - Input: Image file.
+   - Output: Extracted text via Google Gemini API.
+3. **Dashboard:**
+   - Input: User actions (view, download, delete).
+   - Output: Corresponding results.
+
+#### Diagram:
+```
++---------+       +----------------+       +-------------+       +---------------+
+|  User   | ----> | Authentication | ----> | Image Upload| ----> | Text Extraction|
++---------+       +----------------+       +-------------+       +---------------+
+                                   |                  |                  |
+                              +---------------------------+        +----------------+
+                              | Google Gemini API         |        | Text Results   |
+                              +---------------------------+        +----------------+
+```
+
+---
+
+## 6. Entity Relationship Diagram (ERD)
+### Entities:
+1. **User:**
+   - Fields: user_id (PK), name, email, password, created_at.
+2. **Image:**
+   - Fields: image_id (PK), user_id (FK), image_url, upload_date.
+3. **Result:**
+   - Fields: result_id (PK), image_id (FK), extracted_text, created_at.
+
+### Relationships:
+- User (1) --- (N) Image.
+- Image (1) --- (1) Result.
+- User (1) --- (M) Result (via Image).
+
+#### ERD Diagram:
+```
++---------+         +--------+         +---------+
+|  User   | 1 ----> | Image  | 1 ----> | Result  |
++---------+         +--------+         +---------+
+| user_id |         | image_id|         |result_id|
+|  email  |         |user_id |         |image_id |
++---------+         +--------+         +---------+
+
+Many-to-Many Relationship:
+  - User to Results indirectly through Images.
+```
+
+---
+
+## 7. Implementation Details
+### Backend (Node.js and Express.js):
+1. **User Authentication APIs:**
+   - Signup: Creates new users and hashes passwords.
+   - Login: Verifies credentials and issues JWT.
+2. **Image Upload API:**
+   - Handles image uploads and stores them in the database.
+3. **Image Analysis API:**
+   - Integrates Google Gemini API to process uploaded images and extract text.
+
+### Frontend (React.js):
+1. **Signup and Login Pages:**
+   - Form validation and integration with authentication API.
+2. **Dashboard:**
+   - Displays uploaded images and extracted text.
+   - Allows download or deletion of results.
+
+---
+
+## 8. Testing
+1. **Unit Testing:**
+   - Test APIs for authentication, image upload, and text extraction.
+2. **Integration Testing:**
+   - Validate end-to-end workflows (e.g., signup to result retrieval).
+3. **Frontend Testing:**
+   - Verify form validations and dashboard functionality.
+
+---
+
+## 9. Conclusion
+This MERN application successfully integrates the Google Gemini API for image analysis and text extraction, along with secure user authentication. Its intuitive UI and robust backend architecture ensure a seamless experience for users. The project demonstrates the power of modern web technologies in solving real-world challenges.
